@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мастер рецептов</title>
+</head>
+<body>
+    <h1>Мастер рецептов</h1>
+    <form action="/" method="post">
+        {% csrf_token %}
+        <p>Количество персон: 
+        <input type="number" name="person_count" required min="1" value="1" size="10">
+        </p>
+        <p>
+        {{ dish_list|safe }}
+        </p>
+        <input type="submit" value="Получить список ингридиентов">
+
+    </form>
+</body>
+</html>
