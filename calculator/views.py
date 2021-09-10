@@ -1,5 +1,4 @@
-from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 
 
 # Create your views here.
@@ -23,33 +22,32 @@ DATA = {
         }
 
 
-
 def get_context(dish, servings):
     context = {'recipe': DATA.get(dish),
                'servings': servings,
-               'name': dish  
-                } 
+               'name': dish
+               }
     return context
+
 
 def home_view(request):
 
     template_name = 'calculator/home.html'
     dish_list = ''
     for dish in DATA:
-        dish_list += f'<input type="radio", name="dish" required value="{dish}">{dish}<br>'
+        dish_list += (f'<input type="radio", name="dish" '
+                      f'required value="{dish}">{dish}<br>'
+                      )
 
-
-    context = { 'dish_list': dish_list }
+    context = {'dish_list': dish_list}
 
     if request.method == 'POST':
         ch_dish = request.POST['dish']
         servings = request.POST['person_count']
         template_name = 'calculator/index.html'
         return render(request, template_name, get_context(ch_dish, servings))
-        
 
     return render(request, template_name, context)
-    
 
 
 def dish_view(request, dish):
@@ -57,6 +55,3 @@ def dish_view(request, dish):
     servings = request.GET.get('servings')
     servings = int(servings) if servings else 1
     return render(request, template_name, get_context(dish, servings))
-
-
-
